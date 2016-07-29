@@ -50,8 +50,6 @@ def write_fasta(dictionary, filename):
             outfile.write("\n".join(textwrap.wrap(value, 60)))
             outfile.write("\n")
 
-    print "Success! File written"
-
 ## Swaps DNA sequencs for proteins
 
 def swap_dna(dnastring):
@@ -70,8 +68,8 @@ def swap_dna(dnastring):
         'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGT':'G',
         'TCA':'S', 'TCC':'S', 'TCG':'S', 'TCT':'S',
         'TTC':'F', 'TTT':'F', 'TTA':'L', 'TTG':'L',
-        'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
-        'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W',
+        'TAC':'Y', 'TAT':'Y', 'TAA':'*', 'TAG':'*',
+        'TGC':'C', 'TGT':'C', 'TGA':'*', 'TGG':'W',
         }
     protein = []
     end = len(dnastring) - (len(dnastring) %3) - 1
