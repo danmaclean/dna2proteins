@@ -53,6 +53,7 @@ def write_fasta(dictionary, filename):
 ## Swaps DNA sequencs for proteins
 
 def swap_dna(dnastring):
+    dnastring = dnastring.upper()
     table = {
         'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
         'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
@@ -79,7 +80,7 @@ def swap_dna(dnastring):
             aminoacid = table[codon]
             protein.append(aminoacid)
         else:
-            protein.append("N")
+            protein.append("X")
     return "".join(protein)
 
 ## Generates the six possible frames per one sequence
@@ -152,20 +153,8 @@ def oframe(amino):
 
 def find_prots(dictionary):
     prots_dict = {}
-    for key, value in dictionary.items():
-        poss_protein = []
-        for f in value:
-            poss_protein += (oframe(value[f]))
-            #print key, poss_protein
-            c = 0
-            result = ""
-            for s in poss_protein:
-                if len(s) > c:
-                    result = s
-                    c = len(s)
-                else:
-                    continue
-            prots_dict[key] = result
+    for id, frames in dictionary.items():
+        prots_dict[id] = frames['+1']
 
     return prots_dict
 
@@ -202,9 +191,8 @@ if __name__ == "__main__":
 sequences = read_fasta(inputfile)
 
 sequences_frames = gen_frames(sequences)
-
 proteins = find_prots(sequences_frames)
-
+print proteins
 if printprots == True:
     for key, values in proteins.items():
         print key
